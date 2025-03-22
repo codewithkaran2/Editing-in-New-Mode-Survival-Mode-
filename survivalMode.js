@@ -3,7 +3,7 @@
 // CHAOS KEYBOARD BATTLE - SURVIVAL MODE
 // ============================
 
-// Canvas setup
+// Canvas setup (ensure the canvas exists in the DOM)
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -226,13 +226,18 @@ function update() {
   requestAnimationFrame(update);
 }
 
-// Start game timers and loop
-setInterval(spawnEnemy, enemySpawnRate);
-setInterval(spawnPowerUp, 10000);
-update();
+// Initialize game: start timers and the game loop.
+function initGame() {
+  // Start enemy and power-up timers
+  setInterval(spawnEnemy, enemySpawnRate);
+  setInterval(spawnPowerUp, 10000);
+  // Start the game loop
+  update();
+}
 
 // Called when Survival Mode starts
 function survivalStartGame() {
+  console.log("Survival mode starting...");
   // Reset player values
   player.x = canvas.width / 2 - 25;
   player.y = canvas.height - 100;
@@ -249,4 +254,7 @@ function survivalStartGame() {
   if (controls && controls.children.length > 1) {
     controls.children[1].style.display = "none";
   }
+  
+  // Now initialize the game loop and timers
+  initGame();
 }
